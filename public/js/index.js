@@ -11,6 +11,17 @@ socket.on('newMessage', function(message) {
 	jQuery('#messages').append(li);
 });
 
+socket.on('newLocationMessage', function(message) {
+	console.log('new location message received', message);
+	var li = jQuery('<li></li>');
+	var a = jQuery('<a target="_blank">Map Link</a>');
+
+	li.text(`${message.from} : `);
+	a.attr('href', `${message.url}`);
+	li.append(a);
+	jQuery('#messages').append(li);
+});
+
 /*socket.emit('createMessage', {
 	to:'jen@example.com',
 	text: 'this is create email'
@@ -32,4 +43,20 @@ jQuery('#message-form').on('submit', function(e){
 	}, function(data){
 		console.log('Got it', data);
 	});	
+});
+
+var sendLocation = jQuery('#send-location');
+sendLocation.on('click', function(){
+	if(!navigator.geolocation) {
+		return alert('Browser does not support geolocation api');
+	}
+	navigator.geolocation.getCurrentPosition(function(position){
+		console.log(position);
+		socket.emit('createLocationMessage', {
+			latitude:position.coords.latitude,
+			longitude:position.coords.longitude
+		});
+	}, function(){
+		alert('Unable to fetch location');
+	});
 });

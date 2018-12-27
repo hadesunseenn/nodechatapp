@@ -4,7 +4,7 @@ const http = require('http');
 const express  = require('express');
 const socketIO  = require('socket.io');
 var hbs = require('hbs');
-var {generateMessage} = require('./utils/messages');
+var {generateMessage, generateLocationMessage} = require('./utils/messages');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -45,6 +45,10 @@ io.on('connection', (socket)=>{
 		// socket.broadcast.emit('newMessage', generateMessage(message.from, message.text));
 		io.emit('newMessage', generateMessage(message.from, message.text));
 		callback('this is from server');
+	});
+
+	socket.on('createLocationMessage', (location) =>{
+		io.emit('newLocationMessage', generateLocationMessage('Admin',location.latitude, location.longitude));
 	});
 
 
