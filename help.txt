@@ -6,5 +6,12 @@ starting new chat app project
 Now install express
 3.npm i express
 
-Push to bitbucket
+Push to github
+	git init
+	git add .
+	git commit -m 'initial commit'
+	git push -u origin master
+
 push to heroku
+	heroku create
+	git push heroku master
