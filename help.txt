@@ -6,15 +6,62 @@ starting new chat app project
 Now install express
 3.npm i express
 
-Push to github
+4.Push to github
 	git init
 	git add .
 	git commit -m 'initial commit'
 	git push -u origin master
 
-push to heroku
+5.push to heroku
 	heroku create
 	git push heroku master
 
-Install socket.io
+6.Install socket.io
 	npm i socket.io
+
+
+7.io.on('connection', (socket)=>{
+	
+	//it emits event to a single connection
+		socket.emit('newMessage', {
+		 	from: 'test@user.com',
+		 	text: 'this is text',
+		 	createdAt: 123
+		});
+
+
+	//this emits an event to every connected user
+		io.emit('newMessage', {
+		 	from:message.from,
+		 	text:message.text,
+		 	createdAt:new Date().getTime()
+		});
+
+	//listen to an event
+	socket.on('createMessage', (message)=>{
+
+		//this emits an event to every connected user
+		io.emit('newMessage', {
+		 	from:message.from,
+		 	text:message.text,
+		 	createdAt:new Date().getTime()
+		});
+
+		//this will send message to everybody except me
+		socket.broadcast.emit('newMessage', {
+			from:message.from,
+			text:message.text,
+			createdAt:new Date().getTime()
+		});
+	});
+
+});
+
+
+8.Socket.io on client side
+
+	var socket = io();
+
+	socket.on('connect', function() {
+		console.log('connected');
+	});
