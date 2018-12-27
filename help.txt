@@ -1,0 +1,10 @@
+starting new chat app project
+
+1.npm init
+2.git init 
+
+Now install express
+3.npm i express
+
+Push to bitbucket
+push to heroku
