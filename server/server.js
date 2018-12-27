@@ -31,7 +31,7 @@ io.on('connection', (socket)=>{
 
 	socket.broadcast.emit('newMessage', generateMessage('Admin', 'A new user joined the chat'));
 
-	socket.on('createMessage', (message)=>{
+	socket.on('createMessage', (message, callback)=>{
 		// console.log('createMessage',message);
 
 		//this emits an event to every connected user
@@ -42,7 +42,9 @@ io.on('connection', (socket)=>{
 		// });
 
 		//this will send message to everybody except me
-		socket.broadcast.emit('newMessage', generateMessage(message.from, message.text));
+		// socket.broadcast.emit('newMessage', generateMessage(message.from, message.text));
+		io.emit('newMessage', generateMessage(message.from, message.text));
+		callback('this is from server');
 	});
 
 
