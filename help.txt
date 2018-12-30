@@ -65,3 +65,16 @@ Now install express
 	socket.on('connect', function() {
 		console.log('connected');
 	});
+
+
+9. Some functions
+
+	1.socket.emit() // emits message to just one user
+	
+	2.io.emit() // emits message to all users
+	
+	3.socket.broadcast.emit() // emit message to all users except current user
+	
+	4.io.to('some room').emit() // emit message to all users but in one particular room only
+	
+	5.socket.broadcast.to('some room').emit() //emit message to all users but in one particular room only except current user
